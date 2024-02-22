@@ -1,0 +1,4 @@
+yocto_downloads/
+build_rpi/cache/
+build_rpi/sstate-cache/
+build_rpi/tmp-glibc/
