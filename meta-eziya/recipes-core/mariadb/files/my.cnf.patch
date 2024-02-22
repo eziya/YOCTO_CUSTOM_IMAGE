@@ -1,0 +1,11 @@
+--- a/my.cnf	2024-02-21 19:55:42.749308851 +0900
++++ b/my.cnf	2024-02-21 20:00:31.019054285 +0900
+@@ -14,7 +14,7 @@
+ basedir 					= /usr
+ datadir 					= /var/lib/mysql
+ skip-external-locking
+-skip-networking
++#skip-networking
+ ignore-builtin-innodb
+ default-storage-engine				= myisam
+ bind-address					= localhost

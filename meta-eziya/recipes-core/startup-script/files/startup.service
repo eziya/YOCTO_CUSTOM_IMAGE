@@ -1,0 +1,11 @@
+[Unit]
+Description=Initialize System
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/startup.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
