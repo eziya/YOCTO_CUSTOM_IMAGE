@@ -24,16 +24,27 @@ IMAGE_INSTALL:append = " nftables"
 # Startup scripts
 IMAGE_INSTALL:append = " startup-script"
 
-# Security settings
-inherit extrausers
+# Timezone
+IMAGE_INSTALL:append = " tzdata"
+DEFAULT_TIMEZONE = "Asia/Seoul"
 
-IMAGE_INSTALL:append = " sudo"
+ROOTFS_POSTPROCESS_COMMAND += "set_timezone;"
+set_timezone() {
+    echo ${DEFAULT_TIMEZONE} > ${IMAGE_ROOTFS}/etc/timezone
+    ln -sf ${IMAGE_ROOTFS}/usr/share/zoneinfo/${DEFAULT_TIMEZONE} ${IMAGE_ROOTFS}/etc/localtime
+    echo 'export TZ=${DEFAULT_TIMEZONE}' > ${IMAGE_ROOTFS}/etc/profile.d/tz.sh
+}
 
-PASSWD = "\$6\$vRcGS0O8nEeug1zJ\$YnRLFm/w1y/JtgGOQRTfm57c1.QVSZfbJEHzzLUAFmwcf6N72tDQ7xlsmhEF.3JdVL9iz75DVnmmtxVnNIFvp0"
+# Security settings (Enable when release)
+#inherit extrausers
+
+#IMAGE_INSTALL:append = " sudo"
+
+#PASSWD = "\$6\$vRcGS0O8nEeug1zJ\$YnRLFm/w1y/JtgGOQRTfm57c1.QVSZfbJEHzzLUAFmwcf6N72tDQ7xlsmhEF.3JdVL9iz75DVnmmtxVnNIFvp0"
 
 # Disabling root access and adding new user 'pi' with sudo privileges
 # Lock root account and set shell to /sbin/nologin
-EXTRA_USERS_PARAMS = "usermod -L -e 1 root; \
-                      usermod -s /sbin/nologin root; \
-                      useradd -u 1200 -d /home/pi -s /bin/sh -p '${PASSWD}' pi; \
-                      usermod -a -G sudo pi;"
+#EXTRA_USERS_PARAMS = "usermod -L -e 1 root; \
+#                      usermod -s /sbin/nologin root; \
+#                      useradd -u 1200 -d /home/pi -s /bin/sh -p '${PASSWD}' pi; \
+#                      usermod -a -G sudo pi;"
